@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+"""
+Entry point
+
+python -m aidk
+"""
 
 from aidk.cli import main
 
