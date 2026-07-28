@@ -1,29 +1,43 @@
 """
-AI Development Kit
-Version Information
+AIDK Version Information.
+
+Single source of truth for version metadata.
 """
 
 from __future__ import annotations
 
-__title__ = "AI Development Kit"
-__package_name__ = "aidk"
-__description__ = "Professional AI Engineering Platform"
+from dataclasses import dataclass
 
-__author__ = "Amir Ahmad Shishehgar"
 
-__license__ = "MIT"
+@dataclass(frozen=True)
+class VersionInfo:
+    """
+    Immutable version information.
+    """
 
-__version__ = "0.1.0"
+    major: int = 0
+    minor: int = 1
+    patch: int = 0
+    stage: str = "alpha"
 
-VERSION = __version__
+    @property
+    def full(self) -> str:
+        """
+        Returns the complete version string.
+        """
+        return (
+            f"{self.major}."
+            f"{self.minor}."
+            f"{self.patch}-"
+            f"{self.stage}"
+        )
+
+
+VERSION = VersionInfo()
 
 
 def get_version() -> str:
     """
-    Return current version.
-
-    Returns:
-        Version string.
+    Returns application version.
     """
-
-    return VERSION
+    return VERSION.full
