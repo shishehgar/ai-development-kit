@@ -7,7 +7,7 @@ from __future__ import annotations
 import argparse
 
 from aidk.version import get_version
-
+from aidk.commands.doctor import Doctor
 
 def build_parser() -> argparse.ArgumentParser:
 
@@ -57,7 +57,7 @@ def main():
 
     if args.command == "doctor":
 
-        print("Doctor: OK")
+        Doctor().run()
 
         return
 
