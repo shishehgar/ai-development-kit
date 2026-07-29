@@ -1,10 +1,9 @@
 """
-Entry point
-
-python -m aidk
+AIDK entry point.
 """
+
+from __future__ import annotations
 
 from aidk.cli import main
 
-if __name__ == "__main__":
-    main()
+raise SystemExit(main())

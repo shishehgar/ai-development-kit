@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+Standalone launcher.
+"""
+
 from aidk.cli import main
 
-if __name__ == "__main__":
-    main()
+raise SystemExit(main())

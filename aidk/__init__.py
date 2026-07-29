@@ -1,26 +1,17 @@
 """
-AI Development Kit (AIDK)
-
-Public package interface.
-
-Only stable APIs should be exported from this module.
+AI Development Kit
 """
 
 from __future__ import annotations
 
-from aidk.config import Config
-from aidk.config import get_config
-from aidk.config import reload_config
-
-from aidk.version import VERSION
-from aidk.version import VersionInfo
-from aidk.version import get_version
+from aidk.version import (
+    __version__,
+    __title__,
+    get_version,
+)
 
 __all__ = [
-    "Config",
-    "VersionInfo",
-    "VERSION",
-    "get_config",
-    "reload_config",
+    "__version__",
+    "__title__",
     "get_version",
 ]
