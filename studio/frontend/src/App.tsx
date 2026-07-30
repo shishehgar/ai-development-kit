@@ -1,18 +1,55 @@
-import KnowledgeDashboard from "./pages/KnowledgeDashboard";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom'
+
+
+import KnowledgeDashboard from './pages/KnowledgeDashboard'
+
 import AssistantPage from './pages/assistant/AssistantPage'
+
+
 
 function App() {
 
-    return (
-        <KnowledgeDashboard />
-    );
+  return (
+
+    <BrowserRouter>
+
+      <Routes>
+
+
+        <Route
+
+          path="/"
+
+          element={
+            <KnowledgeDashboard />
+          }
+
+        />
+
+
+
+        <Route
+
+          path="/assistant"
+
+          element={
+            <AssistantPage />
+          }
+
+        />
+
+
+      </Routes>
+
+    </BrowserRouter>
+
+  )
+
 }
 
-<Route
-    path="/assistant"
-    element={
-        <AssistantPage />
-    }
-/>
 
-export default App;
+export default App

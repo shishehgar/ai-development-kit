@@ -1,0 +1,20 @@
+import KnowledgeDashboard from "./pages/KnowledgeDashboard";
+import AssistantPage from './pages/assistant/AssistantPage'
+
+
+
+function App() {
+
+    return (
+        <KnowledgeDashboard />
+    );
+}
+
+<Route
+    path="/assistant"
+    element={
+        <AssistantPage />
+    }
+/>
+
+export default App;
