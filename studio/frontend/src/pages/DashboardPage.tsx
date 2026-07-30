@@ -1,36 +1,71 @@
 import {
   useCallback,
+  useState,
 } from 'react'
 
+
 import {
-  Alert,
   Box,
+  Button,
   Card,
   CardContent,
-  Chip,
   Grid,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material'
 
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
-import FolderRoundedIcon from '@mui/icons-material/FolderRounded'
-import TerminalRoundedIcon from '@mui/icons-material/TerminalRounded'
 
-import { getSystemStatus } from '../api/client'
-import { ErrorState } from '../components/common/ErrorState'
-import { LoadingState } from '../components/common/LoadingState'
-import { useAsync } from '../hooks/useAsync'
+import HubRoundedIcon from '@mui/icons-material/HubRounded'
+import FolderRoundedIcon from '@mui/icons-material/FolderRounded'
+import SchemaRoundedIcon from '@mui/icons-material/SchemaRounded'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded'
+
+
+import {
+  getKnowledgeSummary,
+  scanKnowledgeProject,
+} from '../api/client'
+
+
+import {
+  LoadingState,
+} from '../components/common/LoadingState'
+
+
+import {
+  ErrorState,
+} from '../components/common/ErrorState'
+
+
+import {
+  useAsync,
+} from '../hooks/useAsync'
 
 
 
 export function DashboardPage() {
 
 
+  const [
+    projectPath,
+    setProjectPath,
+  ] = useState('.')
+
+
+  const [
+    scannedData,
+    setScannedData,
+  ] = useState<any>(null)
+
+
+
   const operation = useCallback(
-    () => getSystemStatus(),
+    () =>
+      getKnowledgeSummary(),
     [],
   )
+
 
 
   const {
@@ -38,7 +73,25 @@ export function DashboardPage() {
     loading,
     error,
     reload,
-  } = useAsync(operation)
+  } = useAsync(
+    operation
+  )
+
+
+
+  async function handleScan() {
+
+    const result =
+      await scanKnowledgeProject(
+        projectPath
+      )
+
+
+    setScannedData(
+      result
+    )
+
+  }
 
 
 
@@ -58,7 +111,7 @@ export function DashboardPage() {
 
         message={
           error ??
-          'اطلاعات سیستم در دسترس نیست.'
+          'Knowledge unavailable'
         }
 
         onRetry={reload}
@@ -68,6 +121,52 @@ export function DashboardPage() {
     )
 
   }
+
+
+
+  const current =
+    scannedData ?? data
+
+
+
+  const cards = [
+
+    {
+      title:'Entities',
+      value:current.entities,
+      icon:<HubRoundedIcon />,
+    },
+
+
+    {
+      title:'Relations',
+      value:current.relations,
+      icon:<SchemaRoundedIcon />,
+    },
+
+
+    {
+      title:'Projects',
+      value:current.projects,
+      icon:<FolderRoundedIcon />,
+    },
+
+
+    {
+      title:'Modules',
+      value:current.modules,
+      icon:<SchemaRoundedIcon />,
+    },
+
+
+    {
+      title:'Symbols',
+      value:current.symbols,
+      icon:<HubRoundedIcon />,
+    },
+
+  ]
+
 
 
 
@@ -81,21 +180,17 @@ export function DashboardPage() {
         <Typography
           variant="h4"
         >
-          داشبورد
+
+          Knowledge Dashboard
+
         </Typography>
 
 
         <Typography
-
           color="text.secondary"
-
-          sx={{
-            mt:1,
-          }}
-
         >
 
-          نمای کلی محیط مهندسی AIDK
+          تحلیل ساختار پروژه توسط AIDK
 
         </Typography>
 
@@ -104,19 +199,78 @@ export function DashboardPage() {
 
 
 
-      <Alert
+      <Card>
 
-        icon={
-          <CheckCircleRoundedIcon />
-        }
+        <CardContent>
 
-        severity="success"
+          <Stack spacing={2}>
 
-      >
 
-        Backend محیط AIDK Studio فعال و آماده استفاده است.
+            <Typography
+              sx={{
+                fontWeight:800,
+              }}
+            >
 
-      </Alert>
+              Scan Project
+
+            </Typography>
+
+
+
+            <TextField
+
+              label="Project Path"
+
+              value={projectPath}
+
+              onChange={
+                (event)=>
+                  setProjectPath(
+                    event.target.value
+                  )
+              }
+
+
+              slotProps={{
+
+                htmlInput:{
+                  dir:'ltr',
+                },
+
+              }}
+
+            />
+
+
+
+            <Button
+
+              variant="contained"
+
+              startIcon={
+                <RefreshRoundedIcon />
+              }
+
+              onClick={
+                handleScan
+              }
+
+            >
+
+              Scan
+
+            </Button>
+
+
+          </Stack>
+
+
+        </CardContent>
+
+      </Card>
+
+
 
 
 
@@ -125,235 +279,65 @@ export function DashboardPage() {
         spacing={2}
       >
 
+        {
+          cards.map(
+            (card)=>(
 
-        <Grid
-          size={{
-            md:4,
-            xs:12,
-          }}
-        >
+              <Grid
 
-          <Card>
+                key={card.title}
 
-            <CardContent>
+                size={{
+                  md:4,
+                  xs:12,
+                }}
 
-              <Stack spacing={2}>
+              >
 
+                <Card>
 
-                <TerminalRoundedIcon
-                  color="primary"
-                />
+                  <CardContent>
 
+                    <Stack spacing={2}>
 
-                <Typography
+                      {card.icon}
 
-                  color="text.secondary"
 
-                  variant="body2"
+                      <Typography
+                        color="text.secondary"
+                      >
 
-                >
+                        {card.title}
 
-                  ابزارهای قابل استفاده
+                      </Typography>
 
-                </Typography>
 
+                      <Typography
+                        variant="h3"
+                      >
 
-                <Typography
-                  variant="h4"
-                >
+                        {card.value}
 
-                  {data.command_count}
+                      </Typography>
 
-                </Typography>
 
+                    </Stack>
 
-              </Stack>
 
-            </CardContent>
+                  </CardContent>
 
-          </Card>
 
-        </Grid>
+                </Card>
 
 
+              </Grid>
 
-
-        <Grid
-          size={{
-            md:4,
-            xs:12,
-          }}
-        >
-
-          <Card>
-
-            <CardContent>
-
-
-              <Stack spacing={2}>
-
-
-                <CheckCircleRoundedIcon
-                  color="success"
-                />
-
-
-                <Typography
-
-                  color="text.secondary"
-
-                  variant="body2"
-
-                >
-
-                  وضعیت سیستم
-
-                </Typography>
-
-
-                <Chip
-
-                  color="success"
-
-                  label={data.status}
-
-                  sx={{
-                    alignSelf:'flex-start',
-                  }}
-
-                />
-
-
-              </Stack>
-
-
-            </CardContent>
-
-
-          </Card>
-
-
-        </Grid>
-
-
-
-
-
-        <Grid
-          size={{
-            md:4,
-            xs:12,
-          }}
-        >
-
-
-          <Card>
-
-            <CardContent>
-
-
-              <Stack spacing={2}>
-
-
-                <FolderRoundedIcon
-                  color="primary"
-                />
-
-
-                <Typography
-
-                  color="text.secondary"
-
-                  variant="body2"
-
-                >
-
-                  نسخه Studio
-
-                </Typography>
-
-
-                <Typography
-                  variant="h4"
-                >
-
-                  {data.version}
-
-                </Typography>
-
-
-              </Stack>
-
-
-            </CardContent>
-
-
-          </Card>
-
-
-        </Grid>
-
+            )
+          )
+        }
 
 
       </Grid>
-
-
-
-
-      <Card>
-
-        <CardContent>
-
-
-          <Typography
-
-            gutterBottom
-
-            sx={{
-              fontWeight:800,
-            }}
-
-          >
-
-            مسیر Workspace
-
-          </Typography>
-
-
-
-          <Box
-
-            component="code"
-
-            dir="ltr"
-
-            sx={{
-
-              bgcolor:'grey.100',
-
-              borderRadius:2,
-
-              display:'block',
-
-              overflowX:'auto',
-
-              p:2,
-
-            }}
-
-          >
-
-            {data.workspace_root}
-
-          </Box>
-
-
-
-        </CardContent>
-
-
-      </Card>
-
 
 
     </Stack>
