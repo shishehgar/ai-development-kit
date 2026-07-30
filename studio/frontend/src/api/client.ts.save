@@ -77,8 +77,6 @@ async function request<T>(
 
 
 
-
-
 export function getSystemStatus():
 Promise<SystemStatus> {
 
@@ -89,8 +87,6 @@ Promise<SystemStatus> {
 
 
 
-
-
 export function getCommands():
 Promise<CommandCollection> {
 
@@ -98,8 +94,6 @@ Promise<CommandCollection> {
     '/commands'
   )
 }
-
-
 
 
 
@@ -153,49 +147,7 @@ export type KnowledgeSummary = {
 }
 
 
-export type GraphNode = {
 
-    id:string
-
-    name:string
-
-    kind:string
-
-}
-
-
-
-export type GraphEdge = {
-
-    source:string
-
-    target:string
-
-    relation:string
-
-}
-
-
-
-export type GraphResponse = {
-
-    nodes:GraphNode[]
-
-    edges:GraphEdge[]
-
-}
-
-
-
-export function getProjectGraph():
-
-Promise<GraphResponse> {
-
-    return request<GraphResponse>(
-        '/graph'
-    )
-
-}
 
 
 export function getKnowledgeSummary():

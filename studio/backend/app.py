@@ -17,6 +17,7 @@ from studio.backend.api.routes.registry import router as registry_router
 from studio.backend.api.routes.plugins import router as plugins_router
 from studio.backend.core.config import settings
 
+from studio.backend.api.routes import graph
 from studio.backend.api.routes import knowledge
 
 def create_app() -> FastAPI:
@@ -61,6 +62,7 @@ def create_app() -> FastAPI:
 
     app.include_router(registry_router, prefix=settings.api_prefix)
     app.include_router(plugins_router, prefix=settings.api_prefix)
+    app.include_router(graph.router)
     return app
 
 
