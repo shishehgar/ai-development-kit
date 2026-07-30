@@ -5,11 +5,8 @@ import {
 
 
 import ReactFlow, {
-
     Background,
-
     Controls,
-
 } from 'reactflow'
 
 
@@ -18,140 +15,175 @@ import 'reactflow/dist/style.css'
 
 import {
     getProjectGraph,
+    getImpactReport,
+} from '../../api/client'
+
+
+import type {
+    ImpactReport,
 } from '../../api/client'
 
 
 import {
-    useState,
-} from "react"
-
-
-import {
-    getImpactReport,
-} from "../../api/client"
-
-
-import {
     ImpactPanel,
-} from "../../components/impact/ImpactPanel"
+} from '../../components/impact/ImpactPanel'
+
+
 
 export default function DependencyGraphPage(){
 
+
     const [
-        elements,
-        setElements,
+        nodes,
+        setNodes,
     ] = useState<any[]>([])
+
+
+
+    const [
+        edges,
+        setEdges,
+    ] = useState<any[]>([])
+
 
 
     const [
         impact,
-        setImpact
-    ] = useState(null)
+        setImpact,
+    ] = useState<ImpactReport | null>(
+        null
+    )
+
+
 
     useEffect(()=>{
 
 
         getProjectGraph()
-        .then(data=>{
+        .then(
+            data=>{
 
 
-            const nodes =
-                data.nodes.map(
-                    node=>({
+                const graphNodes =
+                    data.nodes.map(
+                        node=>({
 
-                        id:node.id,
+                            id:node.id,
 
-                        position:{
-                            x:Math.random()*500,
-                            y:Math.random()*500,
-                        },
+                            position:{
+                                x:
+                                Math.random()*500,
 
-                        data:{
+                                y:
+                                Math.random()*500,
+                            },
+
+                            data:{
+                                label:
+                                node.name,
+                            },
+
+                        })
+                    )
+
+
+
+                const graphEdges =
+                    data.edges.map(
+                        edge=>({
+
+                            id:
+                            `${edge.source}-${edge.target}`,
+
+                            source:
+                            edge.source,
+
+                            target:
+                            edge.target,
+
                             label:
-                            node.name
-                        }
+                            edge.relation,
 
-                    })
+                        })
+                    )
+
+
+                setNodes(
+                    graphNodes
                 )
 
 
-
-            const edges =
-                data.edges.map(
-                    edge=>({
-
-                        id:
-                        `${edge.source}-${edge.target}`,
-
-                        source:
-                        edge.source,
-
-                        target:
-                        edge.target,
-
-                        label:
-                        edge.relation,
-
-                    })
+                setEdges(
+                    graphEdges
                 )
 
-
-            setElements(
-                [
-                    ...nodes,
-                    ...edges,
-                ]
-            )
-
-
-        })
+            }
+        )
 
 
     },[])
 
 
 
+
+
     return (
 
-        <div
-            style={{
-                height:'80vh'
-            }}
-        >
+        <div>
 
-            <ReactFlow
-                nodes={
-                    elements.filter(
-                        item=>item.position
-                    )
-                }
-
-                edges={
-                    elements.filter(
-                        item=>item.source
-                    )
-                }
-                
-                onNodeClick={
-                    (_,node)=>{
-
-                        getImpactReport(
-                            node.id
-                        )
-                        .then(
-                            result =>
-                            setImpact(result)
-                        )
-
-                    }
-                }
+            <div
+                style={{
+                    height:'70vh',
+                }}
             >
 
-                <Background />
+                <ReactFlow
 
-                <Controls />
+                    nodes={
+                        nodes
+                    }
 
-            </ReactFlow>
+
+                    edges={
+                        edges
+                    }
+
+
+                    onNodeClick={
+                        (_, node)=>{
+
+
+                            getImpactReport(
+                                node.id
+                            )
+                            .then(
+                                result=>
+                                setImpact(
+                                    result
+                                )
+                            )
+
+
+                        }
+                    }
+
+                >
+
+                    <Background />
+
+                    <Controls />
+
+                </ReactFlow>
+
+
+            </div>
+
+
+
+            <ImpactPanel
+                report={impact}
+            />
+
 
         </div>
 
