@@ -14,6 +14,20 @@ from aidk.knowledge.types import (
     RelationKind,
     Visibility,
 )
+from aidk.knowledge.graph import (
+    KnowledgeGraph,
+    KnowledgeGraphError,
+    EntityNotFoundError,
+)
+from aidk.knowledge.repository import (
+    KnowledgeRepository,
+)
+
+from aidk.knowledge.serializers import (
+    save_snapshot,
+    load_snapshot,
+)
+
 
 __all__ = [
     "EntityKind",
@@ -26,4 +40,10 @@ __all__ = [
     "SourceFileEntity",
     "SymbolEntity",
     "Visibility",
+    "KnowledgeGraph",
+    "KnowledgeGraphError",
+    "EntityNotFoundError",
+    "KnowledgeRepository",
+    "save_snapshot",
+    "load_snapshot",
 ]

@@ -45,6 +45,8 @@ class KnowledgeEntity:
     )
 
     def __post_init__(self) -> None:
+        """Validate and normalize common entity fields."""
+
         self.name = self.name.strip()
 
         if not self.name:
@@ -116,7 +118,11 @@ class ProjectEntity(KnowledgeEntity):
         self.description = description
 
     def to_dict(self) -> dict[str, Any]:
-        payload = super().to_dict()
+        """Serialize the project entity."""
+
+        payload = KnowledgeEntity.to_dict(
+            self
+        )
 
         payload.update(
             {
@@ -157,8 +163,16 @@ class ModuleEntity(KnowledgeEntity):
         self.language = language
 
     def to_dict(self) -> dict[str, Any]:
-        payload = super().to_dict()
-        payload["language"] = self.language.value
+        """Serialize the module entity."""
+
+        payload = KnowledgeEntity.to_dict(
+            self
+        )
+
+        payload["language"] = (
+            self.language.value
+        )
+
         return payload
 
 
@@ -201,7 +215,11 @@ class SourceFileEntity(KnowledgeEntity):
         self.size_bytes = size_bytes
 
     def to_dict(self) -> dict[str, Any]:
-        payload = super().to_dict()
+        """Serialize the source-file entity."""
+
+        payload = KnowledgeEntity.to_dict(
+            self
+        )
 
         payload.update(
             {
@@ -261,17 +279,26 @@ class SymbolEntity(KnowledgeEntity):
 
         if kind not in allowed_kinds:
             raise ValueError(
-                f"Invalid symbol entity kind: {kind.value}"
+                f"Invalid symbol entity kind: "
+                f"{kind.value}"
             )
 
-        if line_start is not None and line_start < 1:
+        if (
+            line_start is not None
+            and line_start < 1
+        ):
             raise ValueError(
-                "line_start must be greater than zero."
+                "line_start must be greater "
+                "than zero."
             )
 
-        if line_end is not None and line_end < 1:
+        if (
+            line_end is not None
+            and line_end < 1
+        ):
             raise ValueError(
-                "line_end must be greater than zero."
+                "line_end must be greater "
+                "than zero."
             )
 
         if (
@@ -280,7 +307,8 @@ class SymbolEntity(KnowledgeEntity):
             and line_end < line_start
         ):
             raise ValueError(
-                "line_end cannot be before line_start."
+                "line_end cannot be before "
+                "line_start."
             )
 
         KnowledgeEntity.__init__(
@@ -301,7 +329,11 @@ class SymbolEntity(KnowledgeEntity):
         self.docstring = docstring
 
     def to_dict(self) -> dict[str, Any]:
-        payload = super().to_dict()
+        """Serialize the symbol entity."""
+
+        payload = KnowledgeEntity.to_dict(
+            self
+        )
 
         payload.update(
             {
@@ -332,6 +364,32 @@ class KnowledgeRelation:
     )
 
     def __post_init__(self) -> None:
+        """Validate relation values."""
+
+        if not isinstance(
+            self.source_id,
+            UUID,
+        ):
+            raise TypeError(
+                "source_id must be a UUID."
+            )
+
+        if not isinstance(
+            self.target_id,
+            UUID,
+        ):
+            raise TypeError(
+                "target_id must be a UUID."
+            )
+
+        if not isinstance(
+            self.kind,
+            RelationKind,
+        ):
+            raise TypeError(
+                "kind must be a RelationKind."
+            )
+
         if self.source_id == self.target_id:
             self.metadata.setdefault(
                 "self_reference",
@@ -340,9 +398,13 @@ class KnowledgeRelation:
 
     @property
     def id(self) -> UUID:
+        """Compatibility alias for relation_id."""
+
         return self.relation_id
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a JSON-compatible relation."""
+
         return {
             "id": str(self.relation_id),
             "source_id": str(self.source_id),

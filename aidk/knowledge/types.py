@@ -2,10 +2,17 @@
 
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import Enum
 
 
-class EntityKind(StrEnum):
+class StringEnum(str, Enum):
+    """String-based enum compatible with Python 3.10."""
+
+    def __str__(self) -> str:
+        return self.value
+
+
+class EntityKind(StringEnum):
     """Kinds of entities represented as graph nodes."""
 
     PROJECT = "project"
@@ -33,7 +40,7 @@ class EntityKind(StrEnum):
     PLUGIN = "plugin"
 
 
-class RelationKind(StrEnum):
+class RelationKind(StringEnum):
     """Kinds of directed graph relationships."""
 
     CONTAINS = "contains"
@@ -57,7 +64,7 @@ class RelationKind(StrEnum):
     REGISTERS = "registers"
 
 
-class Language(StrEnum):
+class Language(StringEnum):
     """Languages recognized by the first knowledge scanner."""
 
     PYTHON = "python"
@@ -76,7 +83,7 @@ class Language(StrEnum):
     UNKNOWN = "unknown"
 
 
-class Visibility(StrEnum):
+class Visibility(StringEnum):
     """Visibility of source-code symbols."""
 
     PUBLIC = "public"
