@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from aidk.application.container import services
+from aidk.app import app
 
 
 class Workspace:
@@ -33,7 +33,7 @@ class Workspace:
         print(f"Tests         : {project.tests}")
 
     def run(self) -> int:
-        report = services.workspace.run()
+        report = app.services.workspace.run()
 
         print()
         print("=" * 70)

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from aidk.application.audit_service import AuditService
 from aidk.application.doctor_service import DoctorService
+from aidk.application.git_report_service import GitReportService
 from aidk.application.git_service import GitService
 from aidk.application.workspace_service import WorkspaceService
 
@@ -19,6 +20,7 @@ class ApplicationServices:
     workspace: WorkspaceService
     audit: AuditService
     git: GitService
+    git_report: GitReportService
 
 
 def build_services(
@@ -43,6 +45,9 @@ def build_services(
         ),
         git=GitService(
             path=git_path,
+        ),
+        git_report=GitReportService(
+            workspace_service=workspace_service,
         ),
     )
 

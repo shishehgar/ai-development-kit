@@ -11,6 +11,9 @@ from aidk.application.container import (
     services,
 )
 from aidk.application.doctor_service import DoctorService
+from aidk.application.git_report_service import (
+    GitReportService,
+)
 from aidk.application.git_service import GitService
 from aidk.application.workspace_service import WorkspaceService
 
@@ -36,6 +39,10 @@ def test_default_container_has_services() -> None:
         services.git,
         GitService,
     )
+    assert isinstance(
+        services.git_report,
+        GitReportService,
+    )
 
 
 def test_container_accepts_custom_paths(
@@ -58,17 +65,15 @@ def test_container_accepts_custom_paths(
     assert container.doctor.workspace == (
         system_root.resolve()
     )
-
     assert container.workspace.root == (
         projects_root.resolve()
     )
-
     assert container.git.path == (
         git_path.resolve()
     )
 
 
-def test_audit_reuses_workspace_service(
+def test_services_share_workspace_instance(
     tmp_path: Path,
 ) -> None:
     container = build_services(
@@ -77,5 +82,10 @@ def test_audit_reuses_workspace_service(
 
     assert (
         container.audit.workspace_service
+        is container.workspace
+    )
+
+    assert (
+        container.git_report.workspace_service
         is container.workspace
     )

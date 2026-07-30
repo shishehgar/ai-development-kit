@@ -1,28 +1,19 @@
-"""
-Audit Command
-"""
+"""Audit CLI adapter."""
 
-from aidk.audit.engine import AuditEngine
+from __future__ import annotations
+
+from aidk.app import app
 from aidk.audit.printer import AuditPrinter
-from aidk.workspace.analyzer import WorkspaceAnalyzer
-from aidk.workspace.scanner import WorkspaceScanner
 
 
 class AuditCommand:
     """Run engineering audit."""
 
     def run(self) -> int:
+        report = app.services.audit.run()
 
-        scanner = WorkspaceScanner()
-
-        analyzer = WorkspaceAnalyzer()
-
-        projects = scanner.scan()
-
-        projects = analyzer.analyze(projects)
-
-        report = AuditEngine().generate(projects)
-
-        AuditPrinter().show(report)
+        AuditPrinter().show(
+            report
+        )
 
         return 0

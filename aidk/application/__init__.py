@@ -14,6 +14,11 @@ from aidk.application.doctor_service import (
     DoctorReport,
     DoctorService,
 )
+from aidk.application.git_report_service import (
+    GitReportService,
+    GitRisk,
+    GitWorkspaceReport,
+)
 from aidk.application.git_service import (
     GitReport,
     GitService,
@@ -32,7 +37,10 @@ __all__ = [
     "DoctorReport",
     "DoctorService",
     "GitReport",
+    "GitReportService",
+    "GitRisk",
     "GitService",
+    "GitWorkspaceReport",
     "WorkspaceProjectSummary",
     "WorkspaceReport",
     "WorkspaceService",

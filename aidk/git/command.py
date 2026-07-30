@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from aidk.application.container import services
+from aidk.app import app
 from aidk.git.models import GitInfo
 from aidk.git.printer import GitPrinter
 
@@ -34,7 +34,7 @@ class GitCommand:
         )
 
     def run(self) -> int:
-        report = services.git.run(
+        report = app.services.git.run(
             Path.cwd()
         )
 
