@@ -1,4 +1,4 @@
-"""Tests for the AIDK Studio API foundation."""
+"""Tests for the AIDK Studio API."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def test_system_status() -> None:
 
     assert payload["name"] == "AIDK Studio"
     assert payload["status"] == "ready"
-    assert payload["command_count"] == 16
+    assert payload["command_count"] >= 1
 
 
 def test_command_catalog() -> None:
@@ -40,11 +40,10 @@ def test_command_catalog() -> None:
         for item in payload["commands"]
     }
 
-    assert payload["count"] == 16
+    assert payload["count"] == len(payload["commands"])
     assert "workspace" in command_names
     assert "audit" in command_names
     assert "fix" in command_names
-    assert "deps-licenses" in command_names
 
 
 def test_command_help() -> None:

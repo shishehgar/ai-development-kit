@@ -1,4 +1,4 @@
-"""Project management API routes."""
+"""Project routes."""
 
 from __future__ import annotations
 

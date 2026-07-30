@@ -1,4 +1,4 @@
-"""Discover AIDK capabilities from the existing command registry."""
+"""Read AIDK capabilities from the existing registry."""
 
 from __future__ import annotations
 
@@ -9,16 +9,16 @@ from studio.backend.schemas.commands import CommandSummary
 
 
 class CommandCatalogService:
-    """Expose registered AIDK commands without duplicating CLI definitions."""
+    """Expose registered AIDK commands to the graphical interface."""
 
     def list_commands(self) -> list[CommandSummary]:
         registry = build_registry()
-        commands: list[CommandSummary] = []
+        result: list[CommandSummary] = []
 
         for command in registry.all():
             help_entry = HELP_CATALOG.get(command.name, {})
 
-            commands.append(
+            result.append(
                 CommandSummary(
                     name=command.name,
                     title_fa=help_entry.get("title_fa", command.name),
@@ -33,11 +33,14 @@ class CommandCatalogService:
                 )
             )
 
-        return commands
+        return result
 
     def get_command(self, command_name: str) -> CommandSummary | None:
-        for command in self.list_commands():
-            if command.name == command_name:
-                return command
-
-        return None
+        return next(
+            (
+                command
+                for command in self.list_commands()
+                if command.name == command_name
+            ),
+            None,
+        )

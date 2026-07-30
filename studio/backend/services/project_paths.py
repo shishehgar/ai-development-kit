@@ -1,4 +1,4 @@
-"""Safe project path validation."""
+"""Safe validation of project paths."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from studio.backend.schemas.projects import ProjectPathResult
 
 
 class ProjectPathService:
-    """Validate project paths before any AIDK operation is executed."""
+    """Validate project paths before running AIDK operations."""
 
     def validate(self, raw_path: str) -> ProjectPathResult:
         candidate = Path(raw_path).expanduser()
@@ -23,12 +23,12 @@ class ProjectPathService:
                 is_directory=False,
                 is_git_repository=False,
                 allowed=False,
-                message=f"امکان پردازش مسیر وجود ندارد: {exc}",
+                message=f"پردازش مسیر ممکن نیست: {exc}",
             )
 
         exists = resolved.exists()
         is_directory = resolved.is_dir()
-        is_git = is_directory and (resolved / ".git").exists()
+        is_git_repository = is_directory and (resolved / ".git").is_dir()
 
         try:
             resolved.relative_to(settings.workspace_root)
@@ -43,9 +43,7 @@ class ProjectPathService:
         elif not is_directory:
             message = "مسیر انتخاب‌شده یک پوشه نیست."
         elif not inside_workspace:
-            message = (
-                "مسیر خارج از Workspace مجاز AIDK Studio قرار دارد."
-            )
+            message = "مسیر خارج از Workspace مجاز قرار دارد."
         else:
             message = "مسیر پروژه معتبر است."
 
@@ -53,7 +51,7 @@ class ProjectPathService:
             path=str(resolved),
             exists=exists,
             is_directory=is_directory,
-            is_git_repository=is_git,
+            is_git_repository=is_git_repository,
             allowed=allowed,
             message=message,
         )

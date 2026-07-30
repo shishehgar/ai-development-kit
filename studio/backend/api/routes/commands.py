@@ -1,8 +1,8 @@
-"""Command discovery and contextual help routes."""
+"""Command and help routes."""
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException
 
 from studio.backend.schemas.commands import (
     CommandCollection,
@@ -30,7 +30,7 @@ def get_command(command_name: str) -> CommandSummary:
 
     if command is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=404,
             detail="فرمان موردنظر در AIDK ثبت نشده است.",
         )
 

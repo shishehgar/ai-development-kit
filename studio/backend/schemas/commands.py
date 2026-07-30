@@ -1,4 +1,4 @@
-"""API models for AIDK command discovery."""
+"""Command catalog API schemas."""
 
 from __future__ import annotations
 

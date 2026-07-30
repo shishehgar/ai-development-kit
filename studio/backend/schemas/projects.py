@@ -1,4 +1,4 @@
-"""API models for project path validation."""
+"""Project API schemas."""
 
 from __future__ import annotations
 

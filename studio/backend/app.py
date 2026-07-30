@@ -15,9 +15,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.app_name,
         version=settings.version,
-        description=(
-            "Visual engineering workspace API for AI Development Kit."
-        ),
+        description="Visual engineering workspace for AIDK.",
         docs_url="/docs",
         redoc_url="/redoc",
         openapi_url=f"{settings.api_prefix}/openapi.json",

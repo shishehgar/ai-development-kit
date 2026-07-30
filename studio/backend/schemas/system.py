@@ -1,4 +1,4 @@
-"""API response models for system information."""
+"""System API schemas."""
 
 from __future__ import annotations
 
