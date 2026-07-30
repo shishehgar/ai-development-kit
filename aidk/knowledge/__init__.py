@@ -27,6 +27,9 @@ from aidk.knowledge.serializers import (
     save_snapshot,
     load_snapshot,
 )
+from aidk.knowledge.scanner import (
+    KnowledgeScanner,
+)
 
 
 __all__ = [
@@ -46,4 +49,5 @@ __all__ = [
     "KnowledgeRepository",
     "save_snapshot",
     "load_snapshot",
+    "KnowledgeScanner",
 ]
