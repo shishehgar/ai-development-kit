@@ -17,6 +17,7 @@ from studio.backend.api.routes.registry import router as registry_router
 from studio.backend.api.routes.plugins import router as plugins_router
 from studio.backend.core.config import settings
 
+from studio.backend.api.routes import impact
 from studio.backend.api.routes import graph
 from studio.backend.api.routes import knowledge
 
@@ -49,7 +50,7 @@ def create_app() -> FastAPI:
     app.include_router(git_router, prefix=settings.api_prefix)
     app.include_router(git_report_router, prefix=settings.api_prefix)
     app.include_router(projects_router, prefix=settings.api_prefix)
-
+    app.include_router(impact.router)
     app.include_router(knowledge.router)
 
     @app.get("/", tags=["root"])

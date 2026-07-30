@@ -21,6 +21,19 @@ import {
 } from '../../api/client'
 
 
+import {
+    useState,
+} from "react"
+
+
+import {
+    getImpactReport,
+} from "../../api/client"
+
+
+import {
+    ImpactPanel,
+} from "../../components/impact/ImpactPanel"
 
 export default function DependencyGraphPage(){
 
@@ -30,6 +43,10 @@ export default function DependencyGraphPage(){
     ] = useState<any[]>([])
 
 
+    const [
+        impact,
+        setImpact
+    ] = useState(null)
 
     useEffect(()=>{
 
@@ -114,7 +131,20 @@ export default function DependencyGraphPage(){
                         item=>item.source
                     )
                 }
+                
+                onNodeClick={
+                    (_,node)=>{
 
+                        getImpactReport(
+                            node.id
+                        )
+                        .then(
+                            result =>
+                            setImpact(result)
+                        )
+
+                    }
+                }
             >
 
                 <Background />

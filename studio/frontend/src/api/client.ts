@@ -136,6 +136,46 @@ Promise<ProjectPathResult> {
 
 
 
+export type ImpactEntity = {
+
+    id:string
+
+    name:string
+
+    kind:string
+
+}
+
+
+
+export type ImpactReport = {
+
+    target_id:string
+
+    affected_entities:ImpactEntity[]
+
+    affected_files:number
+
+    affected_modules:number
+
+    affected_tests:number
+
+    risk:string
+
+}
+
+
+
+export function getImpactReport(
+    entityId:string,
+):
+Promise<ImpactReport> {
+
+    return request<ImpactReport>(
+        `/impact/${entityId}`
+    )
+
+}
 
 
 export type KnowledgeSummary = {
