@@ -1,14 +1,11 @@
 """Knowledge API schemas."""
 
-from __future__ import annotations
-
 from pydantic import BaseModel
 
 
 class KnowledgeSummaryResponse(
     BaseModel
 ):
-    """Knowledge graph statistics."""
 
     entities: int
 
@@ -25,7 +22,6 @@ class KnowledgeSummaryResponse(
 class KnowledgeHealthResponse(
     BaseModel
 ):
-    """Knowledge service health."""
 
     status: str
 

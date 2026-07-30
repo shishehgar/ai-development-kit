@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
+from studio.backend.services.knowledge_runtime import (
+    knowledge_runtime,
+)
+
 from studio.backend.schemas.knowledge import (
     KnowledgeHealthResponse,
     KnowledgeSummaryResponse,
@@ -16,6 +20,7 @@ router = APIRouter(
         "knowledge"
     ],
 )
+
 
 
 @router.get(
@@ -35,24 +40,20 @@ def knowledge_health():
     "/summary",
     response_model=KnowledgeSummaryResponse,
 )
+@router.post(
+    "/scan"
+)
+def scan_project(
+    path: str,
+):
+
+    return (
+        knowledge_runtime.scan_project(
+            path
+        )
+    )
 def knowledge_summary():
 
-    """
-    Temporary dashboard data.
-
-    Later connected to
-    KnowledgeQueryService.
-    """
-
-    return {
-
-        "entities": 0,
-
-        "relations": 0,
-
-        "projects": 0,
-
-        "modules": 0,
-
-        "symbols": 0,
-    }
+    return (
+        knowledge_runtime.summary()
+    )
