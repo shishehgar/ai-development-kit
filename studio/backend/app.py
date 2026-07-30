@@ -10,8 +10,11 @@ from studio.backend.api.routes.doctor import router as doctor_router
 from studio.backend.api.routes.workspace import router as workspace_router
 from studio.backend.api.routes.audit import router as audit_router
 from studio.backend.api.routes.git import router as git_router
+from studio.backend.api.routes.git_report import router as git_report_router
 from studio.backend.api.routes.projects import router as projects_router
 from studio.backend.api.routes.system import router as system_router
+from studio.backend.api.routes.registry import router as registry_router
+from studio.backend.api.routes.plugins import router as plugins_router
 from studio.backend.core.config import settings
 
 
@@ -42,6 +45,7 @@ def create_app() -> FastAPI:
     app.include_router(workspace_router, prefix=settings.api_prefix)
     app.include_router(audit_router, prefix=settings.api_prefix)
     app.include_router(git_router, prefix=settings.api_prefix)
+    app.include_router(git_report_router, prefix=settings.api_prefix)
     app.include_router(projects_router, prefix=settings.api_prefix)
 
     @app.get("/", tags=["root"])
@@ -52,6 +56,8 @@ def create_app() -> FastAPI:
             "documentation": "/docs",
         }
 
+    app.include_router(registry_router, prefix=settings.api_prefix)
+    app.include_router(plugins_router, prefix=settings.api_prefix)
     return app
 
 
