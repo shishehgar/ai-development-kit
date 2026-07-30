@@ -134,8 +134,10 @@ export function HelpDrawer({
 
             <Box>
               <Typography
-                fontWeight={700}
                 gutterBottom
+                sx={{
+                    fontWeight: 800,
+                }}
               >
                 وضعیت ایمنی
               </Typography>
