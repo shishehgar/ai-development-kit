@@ -58,3 +58,20 @@ def test_unknown_command() -> None:
     response = client.get("/api/v1/commands/not-existing")
 
     assert response.status_code == 404
+
+
+def test_doctor_endpoint() -> None:
+    response = client.get("/api/v1/doctor")
+
+    assert response.status_code == 200
+
+    payload = response.json()
+
+    assert payload["status"] in {
+        "healthy",
+        "degraded",
+        "unhealthy",
+    }
+    assert 0 <= payload["health_score"] <= 100
+    assert isinstance(payload["checks"], list)
+    assert payload["checks"]
