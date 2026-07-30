@@ -1,5 +1,5 @@
 import KnowledgeDashboard from "./pages/KnowledgeDashboard";
-
+import AssistantPage from './pages/assistant/AssistantPage'
 
 function App() {
 
@@ -8,5 +8,11 @@ function App() {
     );
 }
 
+<Route
+    path="/assistant"
+    element={
+        <AssistantPage />
+    }
+/>
 
 export default App;

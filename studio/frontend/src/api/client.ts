@@ -226,6 +226,34 @@ export type GraphResponse = {
 }
 
 
+export type AssistantResponse = {
+
+    answer: string
+
+    data: Record<string, unknown>
+
+}
+
+
+
+export function askAssistant(
+    question: string,
+):
+Promise<AssistantResponse> {
+
+    return request<AssistantResponse>(
+        '/assistant/ask',
+        {
+            method:'POST',
+
+            body:JSON.stringify({
+                question,
+            }),
+        },
+    )
+
+}
+
 
 export function getProjectGraph():
 

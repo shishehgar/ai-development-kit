@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
+import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded'
 import {
   AppBar,
   Box,
@@ -21,7 +21,7 @@ import FolderRoundedIcon from '@mui/icons-material/FolderRounded'
 import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import TerminalRoundedIcon from '@mui/icons-material/TerminalRounded'
-
+import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded'
 
 const drawerWidth = 260
 
@@ -31,6 +31,11 @@ const navigation = [
     label: 'داشبورد',
     path: '/',
     icon: <DashboardRoundedIcon />,
+  },
+  {
+    label:"AI Assistant",
+    path:"/assistant",
+    icon:<SmartToyRoundedIcon />,
   },
   {
     label: 'پروژه‌ها',
