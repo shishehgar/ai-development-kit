@@ -1,0 +1,106 @@
+{
+  "project": "AI Development Kit",
+  "package": "aidk",
+  "generated_at": "2026-07-30T10:05:08.995695+00:00",
+  "python_version": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+  "python_executable": "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+  "project_root": "/home/ubuntu/my_services/projects/ai-development-kit",
+  "checks_total": 8,
+  "checks_passed": 8,
+  "checks_failed": 0,
+  "success": true,
+  "results": [
+    {
+      "name": "project-structure",
+      "success": true,
+      "command": [],
+      "return_code": 0,
+      "stdout": "Required project directories are present.",
+      "stderr": ""
+    },
+    {
+      "name": "python-compilation",
+      "success": true,
+      "command": [
+        "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+        "-m",
+        "compileall",
+        "aidk",
+        "tests"
+      ],
+      "return_code": 0,
+      "stdout": "All project Python files compiled successfully.",
+      "stderr": ""
+    },
+    {
+      "name": "module-imports",
+      "success": true,
+      "command": [],
+      "return_code": 0,
+      "stdout": "Imported 113 modules.",
+      "stderr": ""
+    },
+    {
+      "name": "version",
+      "success": true,
+      "command": [],
+      "return_code": 0,
+      "stdout": "AIDK version: 1.0.0",
+      "stderr": ""
+    },
+    {
+      "name": "tabnanny",
+      "success": true,
+      "command": [
+        "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+        "-m",
+        "tabnanny",
+        "/home/ubuntu/my_services/projects/ai-development-kit/aidk",
+        "/home/ubuntu/my_services/projects/ai-development-kit/tests",
+        "/home/ubuntu/my_services/projects/ai-development-kit/scripts/finalize_project.py"
+      ],
+      "return_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "cli-help",
+      "success": true,
+      "command": [
+        "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+        "-m",
+        "aidk",
+        "--help"
+      ],
+      "return_code": 0,
+      "stdout": "usage: aidk [-h]\n            {version,doctor,workspace,git,git-report,audit,dashboard,improve,fix,scan,db,deps,deps-db,deps-check,deps-lock,deps-licenses}\n            ...\n\nAI Development Kit\n\npositional arguments:\n  {version,doctor,workspace,git,git-report,audit,dashboard,improve,fix,scan,db,deps,deps-db,deps-check,deps-lock,deps-licenses}\n    version             Show version\n    doctor              Check installation\n    workspace           Analyze workspace\n    git                 Inspect git repository\n    git-report          Generate git report\n    audit               Engineering audit\n    dashboard           Show workspace dashboard\n    improve             Generate improvement plan\n    fix                 Generate project fixes\n    scan                Scan workspace and persist project data\n    db                  Manage workspace database\n    deps                Inspect project dependencies\n    deps-db             Query stored dependency data\n    deps-check          Check dependency health and reproducibility\n    deps-lock           Check dependency lockfiles\n    deps-licenses       Check dependency licenses\n\noptions:\n  -h, --help            show this help message and exit\n",
+      "stderr": ""
+    },
+    {
+      "name": "cli-version",
+      "success": true,
+      "command": [
+        "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+        "-m",
+        "aidk",
+        "version"
+      ],
+      "return_code": 0,
+      "stdout": "1.0.0\n",
+      "stderr": ""
+    },
+    {
+      "name": "complete-test-suite",
+      "success": true,
+      "command": [
+        "/home/ubuntu/my_services/projects/ai-development-kit/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "return_code": 0,
+      "stdout": "..................................................................       [100%]\n66 passed in 4.33s\n",
+      "stderr": ""
+    }
+  ]
+}
