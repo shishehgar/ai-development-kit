@@ -1,7 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded'
+
 import {
   AppBar,
   Box,
@@ -16,135 +14,47 @@ import {
   Typography,
 } from '@mui/material'
 
-import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
-import FolderRoundedIcon from '@mui/icons-material/FolderRounded'
-import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded'
+
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
-import TerminalRoundedIcon from '@mui/icons-material/TerminalRounded'
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded'
+import HelpOutlineRoundedIcon from '@mui/icons-material/HelpOutlineRounded'
+
+
 
 const drawerWidth = 260
 
 
+
 const navigation = [
+
   {
-    label: 'داشبورد',
-    path: '/',
-    icon: <DashboardRoundedIcon />,
+    label:'Dashboard',
+
+    path:'/',
+
+    icon:<DashboardRoundedIcon />,
   },
+
+
   {
-    label:"AI Assistant",
-    path:"/assistant",
+    label:'AI Assistant',
+
+    path:'/assistant',
+
     icon:<SmartToyRoundedIcon />,
   },
-  {
-    label: 'پروژه‌ها',
-    path: '/projects',
-    icon: <FolderRoundedIcon />,
-  },
-  {
-    label: 'ابزارها',
-    path: '/commands',
-    icon: <TerminalRoundedIcon />,
-  },
+
 ]
 
 
-export function StudioLayout({
-  children,
-}: PropsWithChildren) {
-
-  const location = useLocation()
-
-  const [
-    mobileOpen,
-    setMobileOpen,
-  ] = useState(false)
 
 
-  const drawerContent = (
-
-    <Box>
-
-      <Toolbar>
-
-        <Box>
-
-          <Typography
-            color="primary"
-            variant="h6"
-            sx={{
-              fontWeight: 900,
-            }}
-          >
-            AIDK Studio
-          </Typography>
-
-
-          <Typography
-            color="text.secondary"
-            variant="caption"
-          >
-            محیط مهندسی بصری پروژه‌ها
-          </Typography>
-
-        </Box>
-
-      </Toolbar>
-
-
-      <Divider />
-
-
-      <List
-        sx={{
-          px: 1,
-          py: 2,
-        }}
-      >
-
-        {navigation.map((item) => (
-
-          <ListItemButton
-
-            component={Link}
-
-            key={item.path}
-
-            onClick={() =>
-              setMobileOpen(false)
-            }
-
-            selected={
-              location.pathname === item.path
-            }
-
-            sx={{
-              borderRadius: 2,
-              mb: 0.5,
-            }}
-
-            to={item.path}
-
-          >
-
-            <ListItemIcon>
-              {item.icon}
-            </ListItemIcon>
-
-
-            <ListItemText
-              primary={item.label}
-            />
-
-          </ListItemButton>
-
-        ))}
-
-      </List>
-
-    </Box>
-  )
+export function StudioLayout(
+  {
+    children,
+  }: PropsWithChildren
+) {
 
 
   return (
@@ -156,71 +66,36 @@ export function StudioLayout({
       }}
     >
 
+
       <AppBar
-
-        color="inherit"
-
-        elevation={0}
-
         position="fixed"
-
-        sx={{
-          borderBottom:'1px solid',
-          borderColor:'divider',
-
-          mr:{
-            md:`${drawerWidth}px`,
-          },
-
-          width:{
-            md:`calc(100% - ${drawerWidth}px)`,
-          },
-        }}
-
+        color="inherit"
       >
 
         <Toolbar>
 
 
-          <IconButton
-
-            aria-label="نمایش منو"
-
-            onClick={() =>
-              setMobileOpen(true)
-            }
-
-            sx={{
-              display:{
-                md:'none',
-              },
-
-              ml:1,
-            }}
-
-          >
+          <IconButton>
 
             <MenuRoundedIcon />
 
           </IconButton>
 
 
-
           <Typography
-
-            component="div"
-
             sx={{
               flexGrow:1,
               fontWeight:800,
             }}
-
           >
-            مرکز مدیریت پروژه
+
+            AIDK Studio
+
           </Typography>
 
 
-          <IconButton aria-label="راهنما">
+
+          <IconButton>
 
             <HelpOutlineRoundedIcon />
 
@@ -229,91 +104,82 @@ export function StudioLayout({
 
         </Toolbar>
 
+
       </AppBar>
 
 
-      <Box
-        component="nav"
+
+
+
+      <Drawer
+
+        variant="permanent"
+
         sx={{
-          flexShrink:{
-            md:0,
+
+          width:drawerWidth,
+
+          '& .MuiDrawer-paper':{
+
+            width:drawerWidth,
+
           },
 
-          width:{
-            md:drawerWidth,
-          },
         }}
+
       >
 
-        <Drawer
 
-          ModalProps={{
-            keepMounted:true,
-          }}
+        <Toolbar />
 
-          onClose={() =>
-            setMobileOpen(false)
+
+        <Divider />
+
+
+        <List>
+
+
+          {
+            navigation.map(
+              item=>(
+
+                <ListItemButton
+                  key={item.path}
+                  component="a"
+                  href={item.path}
+                >
+
+
+                  <ListItemIcon>
+
+                    {item.icon}
+
+                  </ListItemIcon>
+
+
+
+                  <ListItemText
+
+                    primary={
+                      item.label
+                    }
+
+                  />
+
+
+                </ListItemButton>
+
+              )
+            )
           }
 
-          open={mobileOpen}
 
-          sx={{
-
-            display:{
-              md:'none',
-              xs:'block',
-            },
-
-            '& .MuiDrawer-paper':{
-              width:drawerWidth,
-            },
-
-          }}
-
-          variant="temporary"
-
-        >
-
-          {drawerContent}
-
-        </Drawer>
+        </List>
 
 
+      </Drawer>
 
-        <Drawer
 
-          open
-
-          sx={{
-
-            display:{
-              md:'block',
-              xs:'none',
-            },
-
-            '& .MuiDrawer-paper':{
-
-              borderLeft:'1px solid',
-
-              borderRight:0,
-
-              borderColor:'divider',
-
-              width:drawerWidth,
-
-            },
-
-          }}
-
-          variant="permanent"
-
-        >
-
-          {drawerContent}
-
-        </Drawer>
-
-      </Box>
 
 
 
@@ -322,25 +188,25 @@ export function StudioLayout({
         component="main"
 
         sx={{
-          flexGrow:1,
-          minWidth:0,
 
-          p:{
-            md:4,
-            xs:2,
-          },
+          flexGrow:1,
+
+          p:3,
+
+          mt:8,
+
         }}
 
       >
-
-        <Toolbar />
 
         {children}
 
       </Box>
 
 
+
     </Box>
 
   )
+
 }
