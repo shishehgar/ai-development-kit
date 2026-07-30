@@ -10,12 +10,20 @@ from aidk.application.doctor_service import (
     DoctorReport,
     DoctorService,
 )
+from aidk.application.workspace_service import (
+    WorkspaceProjectSummary,
+    WorkspaceReport,
+    WorkspaceService,
+)
 
 __all__ = [
     "ApplicationServices",
     "DoctorCheck",
     "DoctorReport",
     "DoctorService",
+    "WorkspaceProjectSummary",
+    "WorkspaceReport",
+    "WorkspaceService",
     "build_services",
     "services",
 ]

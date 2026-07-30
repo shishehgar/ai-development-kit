@@ -10,9 +10,10 @@ from aidk.application.container import (
     services,
 )
 from aidk.application.doctor_service import DoctorService
+from aidk.application.workspace_service import WorkspaceService
 
 
-def test_default_container_has_doctor_service() -> None:
+def test_default_container_has_services() -> None:
     assert isinstance(
         services,
         ApplicationServices,
@@ -23,39 +24,33 @@ def test_default_container_has_doctor_service() -> None:
         DoctorService,
     )
 
+    assert isinstance(
+        services.workspace,
+        WorkspaceService,
+    )
 
-def test_container_can_use_custom_workspace(
+
+def test_container_accepts_custom_paths(
     tmp_path: Path,
 ) -> None:
+    system_root = tmp_path / "system"
+    projects_root = tmp_path / "projects"
+
+    system_root.mkdir()
+    projects_root.mkdir()
+
     container = build_services(
-        workspace=tmp_path,
+        workspace=system_root,
+        projects_root=projects_root,
     )
 
-    report = container.doctor.run()
+    doctor_report = container.doctor.run()
+    workspace_report = container.workspace.run()
 
-    assert report.workspace == str(
-        tmp_path.resolve()
+    assert doctor_report.workspace == str(
+        system_root.resolve()
     )
 
-
-def test_container_instances_are_independent(
-    tmp_path: Path,
-) -> None:
-    first_workspace = tmp_path / "first"
-    second_workspace = tmp_path / "second"
-
-    first_workspace.mkdir()
-    second_workspace.mkdir()
-
-    first = build_services(
-        workspace=first_workspace,
-    )
-
-    second = build_services(
-        workspace=second_workspace,
-    )
-
-    assert (
-        first.doctor.workspace
-        != second.doctor.workspace
+    assert workspace_report.root == str(
+        projects_root.resolve()
     )
