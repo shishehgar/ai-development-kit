@@ -8,6 +8,7 @@ from pydantic import BaseModel
 class KnowledgeSummaryResponse(
     BaseModel
 ):
+    """Knowledge graph statistics."""
 
     entities: int
 
@@ -18,3 +19,14 @@ class KnowledgeSummaryResponse(
     modules: int
 
     symbols: int
+
+
+
+class KnowledgeHealthResponse(
+    BaseModel
+):
+    """Knowledge service health."""
+
+    status: str
+
+    service: str
