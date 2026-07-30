@@ -12,6 +12,8 @@ class IntelligenceScorer:
 
         score = 0
 
+        documentation_bonus = 0
+
         strengths = []
 
         weaknesses = []
@@ -144,6 +146,15 @@ class IntelligenceScorer:
                 "Add Continue/Copilot AI configuration"
             )
 
+        # Documentation Intelligence
+
+        if hasattr(project, "documentation_score"):
+
+            documentation_bonus = (
+                project.documentation_score // 10
+            )
+
+            score += documentation_bonus
 
         # Score
 

@@ -2,14 +2,12 @@
 Doctor Command
 """
 
-from __future__ import annotations
-
 from aidk.core.doctor_engine import DoctorEngine
 
 
 class Doctor:
 
-    def run(self) -> int:
+    def run(self):
 
         DoctorEngine().run()
 

@@ -4,8 +4,11 @@ Workspace Project Model
 
 from dataclasses import dataclass, field
 from pathlib import Path
-
+from aidk.security.models import SecurityReport
 from aidk.git.models import GitInfo
+from aidk.knowledge.models import Knowledge
+from aidk.deployment.models import DeploymentReport
+from aidk.maturity.model import MaturityReport
 
 
 @dataclass
@@ -44,6 +47,7 @@ class Project:
 
     grade: str = "D"
 
+    documentation_score: int = 0
 
     strengths: list[str] = field(
         default_factory=list
@@ -57,4 +61,24 @@ class Project:
 
     recommendations: list[str] = field(
         default_factory=list
+    )
+
+
+    knowledge: Knowledge = field(
+        default_factory=Knowledge
+    )
+
+
+    security: SecurityReport = field(
+        default_factory=SecurityReport
+    )
+
+
+    deployment: DeploymentReport = field(
+        default_factory=DeploymentReport
+    )
+
+
+    maturity: MaturityReport = field(
+        default_factory=MaturityReport
     )
