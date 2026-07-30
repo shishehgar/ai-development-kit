@@ -21,7 +21,13 @@ from aidk.knowledge.analyzers.python import (
     PythonAnalyzer,
 )
 
+from aidk.knowledge.dependency import (
+    DependencyAnalyzer,
+)
 
+from aidk.knowledge.types import (
+    EntityKind,
+)
 
 class KnowledgeScanner:
     """
@@ -36,7 +42,9 @@ class KnowledgeScanner:
             PythonAnalyzer()
         )
 
-
+        self.dependencies = (
+            DependencyAnalyzer()
+        )
 
     def scan(
         self,
@@ -94,5 +102,15 @@ class KnowledgeScanner:
                 module
             )
 
+        for entity in list(
+            graph.find_by_kind(
+                EntityKind.SOURCE_FILE
+            )
+        ):
+
+            self.dependencies.analyze_file(
+                graph,
+                entity,
+            )
 
         return graph

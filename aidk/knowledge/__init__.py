@@ -22,13 +22,16 @@ from aidk.knowledge.graph import (
 from aidk.knowledge.repository import (
     KnowledgeRepository,
 )
-
 from aidk.knowledge.serializers import (
     save_snapshot,
     load_snapshot,
 )
 from aidk.knowledge.scanner import (
     KnowledgeScanner,
+)
+from aidk.knowledge.impact import (
+    ImpactAnalyzer,
+    ImpactReport,
 )
 
 
@@ -50,4 +53,6 @@ __all__ = [
     "save_snapshot",
     "load_snapshot",
     "KnowledgeScanner",
+    "ImpactAnalyzer",
+    "ImpactReport",
 ]
