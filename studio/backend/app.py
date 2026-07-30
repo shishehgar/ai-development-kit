@@ -7,6 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from studio.backend.api.routes.commands import router as commands_router
 from studio.backend.api.routes.doctor import router as doctor_router
+from studio.backend.api.routes.workspace import router as workspace_router
+from studio.backend.api.routes.audit import router as audit_router
+from studio.backend.api.routes.git import router as git_router
 from studio.backend.api.routes.projects import router as projects_router
 from studio.backend.api.routes.system import router as system_router
 from studio.backend.core.config import settings
@@ -36,6 +39,9 @@ def create_app() -> FastAPI:
     app.include_router(system_router, prefix=settings.api_prefix)
     app.include_router(commands_router, prefix=settings.api_prefix)
     app.include_router(doctor_router, prefix=settings.api_prefix)
+    app.include_router(workspace_router, prefix=settings.api_prefix)
+    app.include_router(audit_router, prefix=settings.api_prefix)
+    app.include_router(git_router, prefix=settings.api_prefix)
     app.include_router(projects_router, prefix=settings.api_prefix)
 
     @app.get("/", tags=["root"])
