@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, Query
 
-from aidk.application.container import services
+from aidk.app import app
 from studio.backend.schemas.git import GitReportResponse
 
 
@@ -27,7 +27,7 @@ def inspect_git(
 ) -> GitReportResponse:
     target = Path(path) if path else None
 
-    report = services.git.run(
+    report = app.services.git.run(
         target
     )
 

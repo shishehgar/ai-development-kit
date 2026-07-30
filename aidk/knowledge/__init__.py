@@ -33,6 +33,9 @@ from aidk.knowledge.impact import (
     ImpactAnalyzer,
     ImpactReport,
 )
+from aidk.knowledge.query import (
+    KnowledgeQueryService,
+)
 
 
 __all__ = [
@@ -55,4 +58,5 @@ __all__ = [
     "KnowledgeScanner",
     "ImpactAnalyzer",
     "ImpactReport",
+    "KnowledgeQueryService",
 ]
