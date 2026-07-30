@@ -35,12 +35,14 @@ export function HelpDrawer({
       anchor="left"
       open={open}
       onClose={onClose}
-      PaperProps={{
+      slotProps={{
+        paper: {
         sx: {
           maxWidth: '100%',
           p: 3,
           width: 420,
         },
+        }
       }}
     >
       <Stack spacing={3}>
@@ -82,8 +84,10 @@ export function HelpDrawer({
 
             <Stack
               direction="row"
-              flexWrap="wrap"
-              gap={1}
+              sx={{              
+                  flexWrap:"wrap",
+                  gap: 2
+              }}
             >
               <Chip
                 label={
@@ -100,7 +104,9 @@ export function HelpDrawer({
 
             <Box>
               <Typography
-                fontWeight={700}
+                  sx={{  
+                      fontWeight:800
+                  }}  
                 gutterBottom
               >
                 فرمان معادل
