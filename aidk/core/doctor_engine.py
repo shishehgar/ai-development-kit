@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+from aidk.application.container import services
 from aidk.application.doctor_service import (
     DoctorCheck,
     DoctorReport,
-    DoctorService,
 )
 
 
@@ -69,7 +69,7 @@ class DoctorEngine:
         print("-" * 70)
 
     def run(self) -> DoctorReport:
-        report = DoctorService().run()
+        report = services.doctor.run()
 
         self._render_header()
         self._render_python(report)

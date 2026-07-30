@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from aidk.application.doctor_service import DoctorService
+from aidk.application.container import services
 from studio.backend.schemas.doctor import DoctorReportResponse
 
 router = APIRouter(
@@ -18,7 +18,7 @@ router = APIRouter(
     response_model=DoctorReportResponse,
 )
 def run_doctor() -> DoctorReportResponse:
-    report = DoctorService().run()
+    report = services.doctor.run()
 
     return DoctorReportResponse.model_validate(
         report.to_dict()
