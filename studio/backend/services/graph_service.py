@@ -8,6 +8,7 @@ from studio.backend.services.knowledge_runtime import (
 )
 
 
+
 def build_graph_response():
 
     graph = knowledge_runtime.graph
@@ -15,25 +16,30 @@ def build_graph_response():
 
     nodes = []
 
+
     edges = []
 
 
-    for entity in graph._entities.values():
+
+    for entity in graph.entities():
 
         nodes.append(
             {
-                "id": str(entity.id),
+                "id":
+                    str(entity.id),
 
-                "name": entity.name,
+                "name":
+                    entity.name,
 
-                "kind": entity.kind.value,
+                "kind":
+                    entity.kind.value,
 
             }
         )
 
 
 
-    for relation in graph._relations.values():
+    for relation in graph.relations():
 
         edges.append(
             {
@@ -50,10 +56,13 @@ def build_graph_response():
         )
 
 
+
     return {
 
-        "nodes": nodes,
+        "nodes":
+            nodes,
 
-        "edges": edges,
+        "edges":
+            edges,
 
     }

@@ -453,3 +453,36 @@ class KnowledgeGraph:
             return len(
                 self._entities
             )
+
+
+    def entities(
+        self,
+    ) -> list[KnowledgeEntity]:
+        """
+        Return all graph entities.
+
+        Public read API.
+        """
+
+        with self._lock:
+
+            return list(
+                self._entities.values()
+            )
+
+
+
+    def relations(
+        self,
+    ) -> list[KnowledgeRelation]:
+        """
+        Return all graph relations.
+
+        Public read API.
+        """
+
+        with self._lock:
+
+            return list(
+                self._relations.values()
+            )
