@@ -12,10 +12,8 @@ from aidk.ai.providers.base import (
     LLMProvider,
     LLMRequest,
 )
-from aidk.ai.retrieval.context import (
-    GraphContextRetriever,
-    RetrievedContext,
-)
+from aidk.ai.retrieval.base import ContextRetriever
+from aidk.ai.retrieval.models import RetrievedContext
 
 
 @dataclass(slots=True)
@@ -33,7 +31,7 @@ class AssistantEngine:
     def __init__(
         self,
         *,
-        retriever: GraphContextRetriever,
+        retriever: ContextRetriever,
         provider: LLMProvider,
     ) -> None:
         self.retriever = retriever

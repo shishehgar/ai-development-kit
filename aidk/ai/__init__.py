@@ -11,17 +11,25 @@ from aidk.ai.providers import (
     LocalRuleProvider,
 )
 from aidk.ai.retrieval import (
+    CodeContextRetriever,
+    ContextRetriever,
     GraphContextRetriever,
+    ProjectMetadataRetriever,
     RetrievedContext,
+    RetrievalPipeline,
 )
 
 __all__ = [
     "AssistantAnswer",
     "AssistantEngine",
+    "CodeContextRetriever",
+    "ContextRetriever",
     "GraphContextRetriever",
     "LLMProvider",
     "LLMRequest",
     "LLMResponse",
     "LocalRuleProvider",
+    "ProjectMetadataRetriever",
     "RetrievedContext",
+    "RetrievalPipeline",
 ]
