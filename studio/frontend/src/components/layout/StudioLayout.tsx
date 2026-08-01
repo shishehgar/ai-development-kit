@@ -1,5 +1,7 @@
 import type { PropsWithChildren } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import {
   AppBar,
   Box,
@@ -145,8 +147,8 @@ export function StudioLayout(
 
                 <ListItemButton
                   key={item.path}
-                  component="a"
-                  href={item.path}
+                  component={Link}
+                  to={item.path}
                 >
 
 

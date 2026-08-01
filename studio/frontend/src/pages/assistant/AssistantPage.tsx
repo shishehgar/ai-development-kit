@@ -23,6 +23,10 @@ import {
 } from '../../api/client'
 
 
+import ProjectSelector
+    from '../../components/projects/ProjectSelector'
+
+
 
 export default function AssistantPage(){
 
@@ -31,6 +35,14 @@ export default function AssistantPage(){
         question,
         setQuestion,
     ] = useState('')
+
+    const [
+        project,
+        setProject,
+    ] = useState(
+        'ai-development-kit'
+    )
+
 
 
 
@@ -42,21 +54,18 @@ export default function AssistantPage(){
     )
 
 
-
     const [
-        data,
-        setData,
-    ] = useState<Record<string, unknown> | null>(
+        provider,
+        setProvider,
+    ] = useState<string | null>(
         null
     )
-
 
 
     const [
         loading,
         setLoading,
     ] = useState(false)
-
 
 
 
@@ -78,7 +87,8 @@ export default function AssistantPage(){
 
             const result =
                 await askAssistant(
-                    question
+                    question,
+                    project
                 )
 
 
@@ -87,8 +97,8 @@ export default function AssistantPage(){
             )
 
 
-            setData(
-                result.data
+            setProvider(
+                result.provider
             )
 
 
@@ -104,8 +114,6 @@ export default function AssistantPage(){
 
 
 
-
-
     return (
 
         <Stack spacing={3}>
@@ -116,22 +124,17 @@ export default function AssistantPage(){
                 <Typography
                     variant="h4"
                 >
-
                     AI Engineering Assistant
-
                 </Typography>
 
 
                 <Typography
                     color="text.secondary"
                 >
-
                     پرسش درباره ساختار و معماری پروژه
-
                 </Typography>
 
             </Box>
-
 
 
 
@@ -141,6 +144,18 @@ export default function AssistantPage(){
 
 
                     <Stack spacing={2}>
+
+
+                        <ProjectSelector
+
+                            value={project}
+
+                            onChange={
+                                setProject
+                            }
+
+                        />
+
 
 
                         <TextField
@@ -163,7 +178,6 @@ export default function AssistantPage(){
                         />
 
 
-
                         <Button
 
                             variant="contained"
@@ -182,13 +196,13 @@ export default function AssistantPage(){
 
                         >
 
-                            {loading
+                            {
+                                loading
                                 ?
                                 'در حال تحلیل...'
                                 :
                                 'ارسال سؤال'
                             }
-
 
                         </Button>
 
@@ -198,14 +212,12 @@ export default function AssistantPage(){
 
                 </CardContent>
 
-
             </Card>
 
 
 
-
-
-            {answer && (
+            {
+                answer &&
 
                 <Card>
 
@@ -213,17 +225,12 @@ export default function AssistantPage(){
 
 
                         <Typography
-
                             sx={{
                                 fontWeight:800,
                             }}
-
                         >
-
                             پاسخ
-
                         </Typography>
-
 
 
                         <Typography>
@@ -234,7 +241,8 @@ export default function AssistantPage(){
 
 
 
-                        {data && (
+                        {
+                            provider &&
 
                             <Alert
                                 severity="info"
@@ -243,25 +251,18 @@ export default function AssistantPage(){
                                 }}
                             >
 
-                                {JSON.stringify(
-                                    data,
-                                    null,
-                                    2
-                                )}
+                                Provider: {provider}
 
                             </Alert>
 
-                        )}
-
+                        }
 
 
                     </CardContent>
 
-
                 </Card>
 
-            )}
-
+            }
 
 
         </Stack>

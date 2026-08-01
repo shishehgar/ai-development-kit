@@ -9,6 +9,9 @@ from aidk.knowledge import (
     KnowledgeGraph,
     KnowledgeQueryService,
     KnowledgeScanner,
+    save_snapshot,
+    load_snapshot,
+    graph_from_snapshot,
 )
 
 
@@ -30,6 +33,66 @@ class KnowledgeRuntime:
 
         self.scanner = KnowledgeScanner()
 
+        self.snapshot_path = (
+            Path(".aidk")
+            / "knowledge"
+            / "snapshot.json"
+        )
+
+        self._load_snapshot()
+
+
+
+    def _load_snapshot(
+        self,
+    ) -> None:
+
+        if not self.snapshot_path.exists():
+            return
+
+
+        payload = load_snapshot(
+            self.snapshot_path
+        )
+
+
+        self.graph = graph_from_snapshot(
+            payload
+        )
+
+
+        self.query = (
+            KnowledgeQueryService(
+                self.graph
+            )
+        )
+
+
+    def save_snapshot(
+        self,
+    ) -> None:
+
+        payload = {
+
+            "entities": [
+                entity.to_dict()
+                for entity in self.graph.entities()
+            ],
+
+            "relations": [
+                relation.to_dict()
+                for relation in self.graph.relations()
+            ],
+
+        }
+
+
+        save_snapshot(
+            self.snapshot_path,
+            payload,
+        )
+
+
 
 
     def scan_project(
@@ -50,6 +113,8 @@ class KnowledgeRuntime:
                     self.graph
                 )
             )
+
+        self.save_snapshot()
 
         return self.graph.statistics()
 

@@ -37,6 +37,12 @@ from aidk.knowledge.query import (
     KnowledgeQueryService,
 )
 
+from aidk.knowledge.restore import (
+    entity_from_dict,
+    relation_from_dict,
+    graph_from_snapshot,
+)
+
 
 __all__ = [
     "EntityKind",
@@ -59,4 +65,7 @@ __all__ = [
     "ImpactAnalyzer",
     "ImpactReport",
     "KnowledgeQueryService",
+    "entity_from_dict",
+    "relation_from_dict",
+    "graph_from_snapshot",
 ]

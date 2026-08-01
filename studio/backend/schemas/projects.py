@@ -16,3 +16,28 @@ class ProjectPathResult(BaseModel):
     is_git_repository: bool
     allowed: bool
     message: str
+
+
+class ProjectIndexResponse(BaseModel):
+    """Project indexing result."""
+
+    project: str
+
+    entities: int
+
+    relations: int
+
+    status: str
+
+
+class ProjectRegistryItem(BaseModel):
+    """Registered project information."""
+
+    id: str
+
+    name: str
+
+    path: str
+
+    status: str
+

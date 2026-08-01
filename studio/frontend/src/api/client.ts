@@ -2,6 +2,7 @@ import type {
   CommandCollection,
   CommandSummary,
   ProjectPathResult,
+  ProjectRegistryItem,
   SystemStatus,
 } from '../types/api'
 
@@ -230,7 +231,9 @@ export type AssistantResponse = {
 
     answer: string
 
-    data: Record<string, unknown>
+    provider: string
+
+    question: string
 
 }
 
@@ -238,6 +241,7 @@ export type AssistantResponse = {
 
 export function askAssistant(
     question: string,
+    project?: string,
 ):
 Promise<AssistantResponse> {
 
@@ -248,6 +252,7 @@ Promise<AssistantResponse> {
 
             body:JSON.stringify({
                 question,
+                project,
             }),
         },
     )
@@ -291,3 +296,41 @@ export function scanKnowledgeProject(
   )
 
 }
+
+
+export type ProjectIndexResult = {
+
+  project: string
+
+  entities: number
+
+  relations: number
+
+}
+
+
+
+export function indexProject(
+  projectId: string,
+):
+Promise<ProjectIndexResult> {
+
+  return request<ProjectIndexResult>(
+    `/projects/${encodeURIComponent(projectId)}/index`,
+    {
+      method: 'POST',
+    },
+  )
+
+}
+
+
+export function getProjects():
+Promise<ProjectRegistryItem[]> {
+
+  return request<ProjectRegistryItem[]>(
+    '/projects/registry'
+  )
+
+}
+

@@ -1,21 +1,34 @@
 
-# Python virtual environment
-.venv/
-
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Test and analysis cache
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
+# AIDK runtime data
+# Build artifacts
 # Coverage
-.coverage
-htmlcov/
-
 # Local AIDK database
+# Python cache
+# Python caches
+# Python virtual environment
+# Temporary and backup files
+# Test and analysis cache
+*.backup
+*.backup-*
+*.backup.*
+*.bak
 *.db
 *.db-shm
 *.db-wal
+*.egg-info/
+*.orig
+*.py[cod]
+*.rej
+*.temp
+*.tmp
+*~
+.aidk/
+.coverage
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+__pycache__/
+build/
+dist/
+htmlcov/

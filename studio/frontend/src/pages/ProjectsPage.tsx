@@ -24,7 +24,10 @@ import {
 import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded'
 
 
-import { validateProjectPath } from '../api/client'
+import {
+  validateProjectPath,
+  indexProject,
+} from '../api/client'
 
 import type {
   ProjectPathResult,
@@ -61,6 +64,23 @@ export function ProjectsPage() {
   ] = useState<string | null>(
     null
   )
+
+  const [
+    indexed,
+    setIndexed,
+  ] = useState<{
+    project:string
+    entities:number
+    relations:number
+  } | null>(null)
+
+
+  const [
+    indexing,
+    setIndexing,
+  ] = useState(false)
+
+
 
 
 
@@ -113,6 +133,45 @@ export function ProjectsPage() {
     }
 
   }
+
+
+
+
+  async function handleIndex(){
+
+    if(!result?.allowed){
+      return
+    }
+
+
+    setIndexing(true)
+
+
+    try {
+
+      const projectId =
+        result.path.split('/').pop() || ''
+
+
+      const response =
+        await indexProject(
+          projectId
+        )
+
+
+      setIndexed(
+        response
+      )
+
+
+    } finally {
+
+      setIndexing(false)
+
+    }
+
+  }
+
 
 
 
@@ -378,8 +437,54 @@ export function ProjectsPage() {
           </Stack>
 
 
+          <Button
+
+            variant="contained"
+
+            disabled={
+              indexing ||
+              !result.allowed
+            }
+
+            onClick={
+              handleIndex
+            }
+
+          >
+
+            {
+              indexing
+                ? 'در حال ساخت Index...'
+                : 'ساخت Knowledge Index'
+            }
+
+          </Button>
+
+
         </Alert>
 
+
+      ) : null}
+
+
+      {indexed ? (
+
+        <Alert severity="success">
+
+          Project:
+          {indexed.project}
+
+          {" | "}
+
+          Entities:
+          {indexed.entities}
+
+          {" | "}
+
+          Relations:
+          {indexed.relations}
+
+        </Alert>
 
       ) : null}
 

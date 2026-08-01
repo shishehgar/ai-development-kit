@@ -1,3 +1,7 @@
+from aidk.application.assistant_service import (
+    AssistantRunner,
+    AssistantService,
+)
 """AIDK application services."""
 
 from aidk.application.audit_service import (
@@ -30,6 +34,8 @@ from aidk.application.workspace_service import (
 )
 
 __all__ = [
+    "AssistantRunner",
+    "AssistantService",
     "ApplicationServices",
     "AuditReport",
     "AuditService",

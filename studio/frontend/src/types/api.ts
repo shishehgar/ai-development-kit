@@ -37,3 +37,18 @@ export interface ProjectPathResult {
   allowed: boolean
   message: string
 }
+
+
+export interface ProjectRegistryItem {
+
+  id: string
+
+  name: string
+
+  path: string
+
+  status: string
+
+}
+
+

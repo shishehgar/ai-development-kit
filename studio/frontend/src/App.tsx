@@ -1,55 +1,70 @@
 import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from 'react-router-dom'
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom"
 
 
-import KnowledgeDashboard from './pages/KnowledgeDashboard'
-
-import AssistantPage from './pages/assistant/AssistantPage'
-
+import KnowledgeDashboard
+    from "./pages/KnowledgeDashboard"
 
 
-function App() {
-
-  return (
-
-    <BrowserRouter>
-
-      <Routes>
+import AssistantPage
+    from "./pages/assistant/AssistantPage"
 
 
-        <Route
-
-          path="/"
-
-          element={
-            <KnowledgeDashboard />
-          }
-
-        />
+import {
+    ProjectsPage,
+} from "./pages/ProjectsPage"
 
 
 
-        <Route
+export default function App(){
 
-          path="/assistant"
+    return (
 
-          element={
-            <AssistantPage />
-          }
+        <BrowserRouter>
 
-        />
+            <Routes>
 
 
-      </Routes>
+                <Route
 
-    </BrowserRouter>
+                    path="/"
 
-  )
+                    element={
+                        <KnowledgeDashboard />
+                    }
+
+                />
+
+
+                <Route
+
+                    path="/assistant"
+
+                    element={
+                        <AssistantPage />
+                    }
+
+                />
+
+
+                <Route
+
+                    path="/projects"
+
+                    element={
+                        <ProjectsPage />
+                    }
+
+                />
+
+
+            </Routes>
+
+        </BrowserRouter>
+
+    )
 
 }
-
-
-export default App

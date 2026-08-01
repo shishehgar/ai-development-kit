@@ -1,3 +1,7 @@
+
+from aidk.ai.retrieval.factory import (
+    build_retrieval_pipeline,
+)
 """Retrieval services for AIDK AI features."""
 
 from aidk.ai.retrieval.base import ContextRetriever
@@ -10,6 +14,7 @@ from aidk.ai.retrieval.models import RetrievedContext
 from aidk.ai.retrieval.pipeline import RetrievalPipeline
 
 __all__ = [
+    "build_retrieval_pipeline",
     "CodeContextRetriever",
     "ContextRetriever",
     "GraphContextRetriever",

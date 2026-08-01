@@ -1,21 +1,31 @@
-"""Assistant schemas."""
+"""Assistant API schemas."""
 
-from pydantic import BaseModel
+from __future__ import annotations
 
-
-
-class AssistantRequest(
-    BaseModel
-):
-
-    question: str
+from pydantic import BaseModel, Field
 
 
+class AssistantAskRequest(BaseModel):
+    """User question payload."""
 
-class AssistantResponse(
-    BaseModel
-):
+    question: str = Field(
+        min_length=1,
+        description="Engineering question.",
+    )
+
+    project: str | None = Field(
+        default=None,
+        description="Selected project context.",
+    )
+
+
+class AssistantAskResponse(BaseModel):
+    """Assistant answer payload."""
 
     answer: str
 
-    data: dict
+    provider: str
+
+    question: str
+
+    project: str | None = None

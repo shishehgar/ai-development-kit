@@ -1,37 +1,58 @@
 """Assistant API routes."""
 
-from fastapi import APIRouter
+from __future__ import annotations
 
 
-from studio.backend.schemas.assistant import (
-    AssistantRequest,
-    AssistantResponse,
+from fastapi import (
+    APIRouter,
 )
 
 
-from studio.backend.services.assistant.service import (
-    assistant_service,
+from studio.backend.schemas.assistant import (
+    AssistantAskRequest,
+    AssistantAskResponse,
+)
+
+
+from studio.backend.core.dependencies import (
+    get_ai_assistant_service,
 )
 
 
 
 router = APIRouter(
     prefix="/assistant",
-    tags=[
-        "assistant"
-    ],
+    tags=["assistant"],
 )
 
 
 
 @router.post(
     "/ask",
-    response_model=AssistantResponse,
+    response_model=AssistantAskResponse,
 )
-def ask(
-    request: AssistantRequest,
+def ask_assistant(
+    payload: AssistantAskRequest,
 ):
 
-    return assistant_service.ask(
-        request.question
+    service = get_ai_assistant_service(
+        payload.project
+    )
+
+
+    result = service.ask(
+        payload.question
+    )
+
+
+    return AssistantAskResponse(
+
+        answer=result.answer,
+
+        provider=result.provider,
+
+        question=payload.question,
+
+        project=payload.project,
+
     )
